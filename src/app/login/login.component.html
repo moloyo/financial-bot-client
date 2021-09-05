@@ -18,4 +18,5 @@
         <button mat-raised-button type="submit" form="login-form"> Sign In</button>
         <button mat-raised-button (click)="register()">Register</button>
     </mat-card-actions>
+    <span class="error-message" *ngIf="errorMessage">{{ errorMessage }}</span>
 </mat-card>

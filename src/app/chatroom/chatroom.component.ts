@@ -1,8 +1,6 @@
 import { Component, ComponentFactoryResolver, OnInit, ViewChild } from '@angular/core';
 import { IMessage } from '../models/message.model';
-import { ISession } from '../models/session.model';
 import { MessagingService } from '../services/messaging.service';
-import { StorageService } from '../services/storage.service';
 import { MessageComponent } from './message/message.component';
 import { MessageDirective } from './message/message.directive';
 
@@ -47,6 +45,8 @@ export class ChatroomComponent implements OnInit {
   }
 
   deleteAllMessages() {
-    
+    this.messagingService.deleteAllMessages().subscribe(
+      () => this.messageHost.viewContainerRef.clear()
+    );
   }
 }

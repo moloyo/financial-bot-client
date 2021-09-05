@@ -1,11 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HubConnection, HubConnectionBuilder } from "@aspnet/signalr";  // or from "@microsoft/signalr" if you are using a new library
+import { HubConnection, HubConnectionBuilder } from "@aspnet/signalr"; // or from "@microsoft/signalr" if you are using a new library
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IMessage } from '../models/message.model';
 import { AuthenticationService } from './authentication.service';
-import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +26,7 @@ export class MessagingService {
       .catch(err => console.log('Error while starting connection: ' + err))
   }
 
-  addMessageListener = () => {
+  addMessageListener(): void {
     this.hubConnection.on('BroadcastMessage', (message) => {
       this.newMessage.next(message);
     });
@@ -37,7 +36,11 @@ export class MessagingService {
     this.hubConnection.invoke('Message', message).then(() => console.log('Message Sent'));
   }
 
-  getOldMessages() {
+  getOldMessages(): Observable<IMessage[]> {
     return this.http.get<IMessage[]>(this.apiUrl + "/Messages");
+  }
+
+  deleteAllMessages(): Observable<any> {
+    return this.http.delete<any>(this.apiUrl + "/Messages")
   }
 }

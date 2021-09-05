@@ -9,12 +9,12 @@
     display: flex;
     justify-content: stretch;
     margin: 20px;
+    flex: 1 1;
 
     .message-input {
         flex: 1 1 200px;
         color: white;
-        margin-left: 20px;
-     }
+    }
 }
 
 .chat-room {
@@ -22,4 +22,14 @@
     flex-direction: column;
     justify-content: space-between;
     height: calc(100vh - 64px);
+
+    .message-bar {
+        display: flex;
+        flex-direction: row;
+        
+        .delete-button {
+            margin: 25px 0 10px 15px;
+            flex: 0 0 40px;
+        }
+    }
 }

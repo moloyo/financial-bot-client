@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
@@ -10,6 +11,7 @@ import { AuthenticationService } from '../services/authentication.service';
 export class LoginComponent implements OnInit {
   email!: string;
   password!: string;
+  errorMessage: string;
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -20,10 +22,12 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.authenticationService.login(this.email, this.password).subscribe((res) => {
-      console.log('LOGGED', res);
-      this.router.navigate(['/chatroom']);
-    });
+    this.authenticationService.login(this.email, this.password).subscribe(
+      (res) => {
+        this.router.navigate(['/chatroom']);
+      },
+      (err: HttpErrorResponse) => this.errorMessage = err.error
+    );
   }
 
   register() {
@@ -32,7 +36,7 @@ export class LoginComponent implements OnInit {
         console.log('REGISTERED', res);
         this.router.navigate(['/chatroom']);
       },
-      (err) => console.log(err)
+      (err: HttpErrorResponse) => this.errorMessage = err.error
     );
   }
 }
